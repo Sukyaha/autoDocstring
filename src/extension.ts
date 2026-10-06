@@ -41,24 +41,6 @@ export function activate(context: vs.ExtensionContext): void {
             }
         }),
 
-        vs.languages.registerCompletionItemProvider(
-            "python",
-            {
-                provideCompletionItems: (
-                    document: vs.TextDocument,
-                    position: vs.Position,
-                    _: vs.CancellationToken,
-                ) => {
-                    if (validEnterActivation(document, position)) {
-                        return [new AutoDocstringCompletionItem(document, position)];
-                    }
-                },
-            },
-            '"',
-            "'",
-            "#",
-        ),
-    );
 
     ["python", "starlark"].map((language) => {
         context.subscriptions.push(
