@@ -1,4 +1,3 @@
-"use strict";
 import * as vs from "vscode";
 import { AutoDocstring } from "./generate_docstring";
 import { docstringIsClosed, validDocstringPrefix } from "./parse";
@@ -22,7 +21,12 @@ export function activate(context: vs.ExtensionContext): void {
             try {
                 return autoDocstring.generateDocstring();
             } catch (error) {
-                logError(error + "\n\t" + getStackTrace(error));
+                const errorString = JSON.stringify(error);
+                let stackTrace = "";
+                if (error instanceof Error) {
+                    stackTrace = "\n\t" + getStackTrace(error);
+                }
+                return logError(errorString + stackTrace);
             }
         }),
 
