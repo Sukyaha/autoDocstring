@@ -1,7 +1,6 @@
 // import { reverseMustache } from "reverse-mustache";
 // const reverseMustache = require("reverse-mustache");
-import { diffLines } from "Diff";
-import { Argument, DocstringParts } from "../docstring_parts";
+import { DocstringParts } from "../docstring_parts";
 
 // Need to deal with
 // 1. multiline regex
@@ -168,7 +167,8 @@ function getTemplateBlockRegex(template: string, blockName: string): RegExp {
 
     // Replace all tags with named regex capture groups
     blockRegex = replaceTags(blockRegex, "{{var}}", "\\w+", "var");
-    blockRegex = replaceTags(blockRegex, "{{typePlaceholder}}", "[\\w\\[\\], ]+", "type");
+    // Require a non-space start so indentation before the type is not captured.
+    blockRegex = replaceTags(blockRegex, "{{typePlaceholder}}", "[\\w\\[][\\w\\[\\], ]*", "type");
     blockRegex = replaceTags(blockRegex, "{{descriptionPlaceholder}}", ".*", "description");
     blockRegex = replaceTags(blockRegex, "{{&default}}", ".+", "default");
     blockRegex = replaceTags(blockRegex, "{{type}}", "\\w+", "type");
