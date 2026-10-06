@@ -1,6 +1,5 @@
 // import { reverseMustache } from "reverse-mustache";
 // const reverseMustache = require("reverse-mustache");
-import { diffLines } from "Diff";
 import { Argument, DocstringParts } from "../docstring_parts";
 
 // Need to deal with
@@ -121,7 +120,7 @@ export function parseDocstring(oldDocstring: string, template: string) {
 
                 const match = lines.match(returnRegex);
                 docstringParts.returns = {
-                    type: match.groups.type,
+                    type: match.groups.type.trim(),
                 };
 
                 j += returnRegexLineCount;
@@ -143,7 +142,7 @@ export function parseDocstring(oldDocstring: string, template: string) {
 
                 const match = lines.match(yieldRegex);
                 docstringParts.yields = {
-                    type: match.groups.type,
+                    type: match.groups.type.trim(),
                 };
 
                 j += yieldRegexLineCount;

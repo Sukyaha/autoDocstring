@@ -7,7 +7,7 @@ import { parseDocstring, getTemplate } from "../../docstring";
 chai.config.truncateThreshold = 0;
 const expect = chai.expect;
 
-it.only("Full google docstring", () => {
+it("Full google docstring", () => {
     const fullGoogleDocstring = dedent`
     Args:
         arg1 ([type]): An argument. It is named arg1
@@ -33,7 +33,10 @@ it.only("Full google docstring", () => {
 
     expect(docstring).to.eql({
         name: "",
-        args: [{ var: "arg1", type: "[type]" }, { var: "arg2" }],
+        args: [
+            { var: "arg1", type: "[type]" },
+            { var: "arg2", type: "Dict[str, int]" },
+        ],
         kwargs: [{ var: "kwarg1", type: "int", default: "1" }],
         decorators: [],
         exceptions: [{ type: "FileExistsError" }, { type: "KeyError" }],
